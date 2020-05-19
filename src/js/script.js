@@ -59,4 +59,39 @@ $(document).ready(function() {
         $('#total-price-for-all-products').text(totalPriceForAllProducts + '$');
     }
     calculateTotalPrice();
+
+    var citiesByCountry = {
+        sa: ['جدة', 'الرياض'],
+        ma: ['الحسيمة', 'طنجة'],
+        eg: ['القاهرة', 'الإسكندرية'],
+        sy: ['حلب', 'دمشق']
+    };
+    $('#form-checkout select[name=country]').change(function() {
+
+        var country = $(this).val();
+
+        var cities = citiesByCountry[country];
+
+        $('#form-checkout select[name="city"]').empty();
+        $('#form-checkout select[name="city"]').append('<option disabled selected value="">إختر مدينة</option>');
+        cities.forEach(function(city) {
+            var $newOption = $('<option></option>');
+            $newOption.text(city);
+            $newOption.val(city);
+
+            $('#form-checkout select[name="city"]').append($newOption);
+        });
+    });
+    $("input[name='payment-method']").change(function() {
+
+        var paymentMethod = $(this).val();
+
+        if (paymentMethod == 'on-delivery') {
+            $("#credit-card-info input").prop('disabled', true);
+        } else {
+            $("#credit-card-info input").prop('disabled', false);;
+        };
+        $("#credit-card-info").toggle();
+    });
+
 });
